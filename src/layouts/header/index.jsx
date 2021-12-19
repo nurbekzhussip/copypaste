@@ -1,15 +1,12 @@
 import React from 'react'
-import {Flex} from "@chakra-ui/layout";
-import {Box, Heading, Spacer} from "@chakra-ui/react";
+import {Link} from 'react-location'
+import {Box, Heading} from "@chakra-ui/react";
 
 
 export const Header = () => {
-    return <Flex bg={'#f5f5f5'} p='3'>
+    return <header>
         <Box>
-            <Heading size='md' color="#666">CopyPaste</Heading>
+            <Heading size='md' color="#666"><Link to={'/'}>CopyPaste</Link></Heading>
         </Box>
-        <Spacer />
-        <Box>
-        </Box>
-    </Flex>
+    </header>
 }

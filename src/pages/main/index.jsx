@@ -3,16 +3,16 @@ import QRCode from "react-qr-code";
 import QrReader from "react-qr-reader";
 
 import { Tab, TabList, TabPanel, TabPanels, Tabs } from "@chakra-ui/tabs";
-import {InputGroup, InputRightElement, useClipboard} from "@chakra-ui/react";
-import { Flex } from "@chakra-ui/layout";
+import { Center, InputGroup, InputRightElement, useClipboard} from "@chakra-ui/react";
 import { Input } from "@chakra-ui/input";
+import { Flex} from '@chakra-ui/react'
 import { Button } from "@chakra-ui/button";
 
-import "./style.css";
 import { generateShortUUID } from "../../utils/helpers";
+import "./style.css";
 
 export const MainPage = () => {
-  const [qrCode, setQrCode] = useState(generateShortUUID());
+  const [qrCode] = useState(generateShortUUID());
   const [result, setResult] = useState();
   const { hasCopied, onCopy } = useClipboard(qrCode);
 
@@ -21,12 +21,15 @@ export const MainPage = () => {
       setResult(data);
     }
   };
+
   const handleError = (err) => {
     console.error(err);
   };
 
   return (
     <div className="page__main">
+      <Flex >
+        <Center w='100%'>
       <Tabs variant="soft-rounded" colorScheme="green" align="center" isLazy={true}>
         <TabList>
           <Tab>Мой QR-код</Tab>
@@ -34,30 +37,29 @@ export const MainPage = () => {
         </TabList>
         <TabPanels>
           <TabPanel role="tabpanel">
-            <QRCode value={qrCode} fgColor="black" bgColor="white" size="200" />
-            <br/>
-            <InputGroup size='md' width={"100%"} style={{ width: "300px" }}>
-              <Input value={qrCode} pr='5rem' isReadOnly/>
-              <InputRightElement width='5rem'>
-                <Button h='1.75rem' size='sm' onClick={onCopy} ml={2}>
-                  {hasCopied ? "Copied" : "Copy"}
-                </Button>
-              </InputRightElement>
-            </InputGroup>
+             <QRCode value={qrCode} fgColor="black" bgColor="white" />
+             <br/>
+             <InputGroup size='md' width="100%">
+               <Input value={qrCode} pr='5rem' isReadOnly/>
+               <InputRightElement width='5rem'>
+                 <Button h='1.75rem' size='sm' onClick={onCopy} ml={2}>
+                   {hasCopied ? "Copied" : "Copy"}
+                 </Button>
+               </InputRightElement>
+             </InputGroup>
           </TabPanel>
-          <TabPanel>
+          <TabPanel role="tabpanel">
             <QrReader
               delay={300}
               onError={handleError}
               onScan={handleScan}
-              style={{ width: "300px" }}
             />
             <br/>
-            <InputGroup size='md' width={"100%"} style={{ width: "400px" }}>
-              <Input pr='9.5rem' placeholder="или вставьте код"/>
-              <InputRightElement width='9.5rem'>
+            <InputGroup size='md' width="100%" >
+              <Input pr='5rem' placeholder="или вставьте код"/>
+              <InputRightElement width='6rem'>
                 <Button h='1.75rem' size='sm' onClick={onCopy} ml={2}>
-                  Подключиться
+                  Connect
                 </Button>
               </InputRightElement>
             </InputGroup>
@@ -65,6 +67,8 @@ export const MainPage = () => {
           </TabPanel>
         </TabPanels>
       </Tabs>
+        </Center>
+      </Flex>
     </div>
   );
 };
